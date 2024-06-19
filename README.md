@@ -43,19 +43,18 @@ Cipher is a music streaming platform designed for independent artists and their 
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/yourproject.git
-    cd yourproject
+    git clone https://github.com/kalviumcommunity/S47_RishabhJ_Capstone_CIPHER.git
     ```
 
 2. **Install dependencies:**
     - Backend:
       ```bash
-      cd backend
+      cd server
       npm install
       ```
     - Frontend:
       ```bash
-      cd frontend
+      cd client
       npm install
       ```
 
@@ -77,14 +76,14 @@ Cipher is a music streaming platform designed for independent artists and their 
       ```
 
 5. **Start the development server:**
-    - Backend:
-      ```bash
-      cd backend
-      npm run dev
-      ```
     - Frontend:
       ```bash
-      cd frontend
+      cd client
+      npm run dev
+      ```
+    - Backend:
+      ```bash
+      cd server
       npm start
       ```
 
