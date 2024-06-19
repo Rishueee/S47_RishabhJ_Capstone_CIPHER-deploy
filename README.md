@@ -7,9 +7,7 @@
 3. [Tech Stack](#tech-stack)
 4. [Setup and Installation](#setup-and-installation)
 5. [Usage](#usage)
-6. [Contribution Guidelines](#contribution-guidelines)
-7. [License](#license)
-8. [Contact](#contact)
+6. [Contact](#contact)
 
 ## Project Overview
 
@@ -101,14 +99,6 @@ Cipher is a music streaming platform designed for independent artists and their 
 1. **Sign Up:** Create an account on Cipher.
 2. **Discover Music:** Browse and listen to tracks from independent artists.
 3. **Support Artists:** Follow your favorite artists and stay updated with their latest releases.
-
-## Contribution Guidelines
-
-Guidelines for contributing to the project.
-
-## License
-
-Include the license under which the project is distributed.
 
 ## Contact
 
