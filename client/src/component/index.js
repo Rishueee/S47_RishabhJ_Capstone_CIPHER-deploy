@@ -1,7 +1,9 @@
 export { default as Login } from "./Login";
 export { default as Home } from "./Home";
 export { default as Header } from "./Header";
-export {default as LoginUP} from "./Login-UP"
+export {default as Signup} from "./Signup"
+// export {default as SignIn} from "./Signup"
+// export {default as Loader} from "./Loader"
 
 
 
@@ -15,4 +17,10 @@ export {default as DashboardArtist} from "./DashboardArtist";
 export {default as DashboardAlbum} from "./DashboardAlbum";
 export {default as SongCard} from "./SongCard"
 // export {default as FilterButtons} from "./FilterButtons"
+
+
+export { default as Alert } from "./Alert";
+export { default as MusicPlayer } from "./MusicPlayer";
+export {default as UserProfile} from "./UserProfile"
+
 

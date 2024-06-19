@@ -2,7 +2,12 @@ import React, { useEffect } from "react";
 import { FaUsers } from "react-icons/fa";
 import { GiLoveSong, GiMusicalNotes } from "react-icons/gi";
 import { RiUserStarFill } from "react-icons/ri";
-import { getAllAlbums, getAllArtist, getAllSongs, getAllUsers } from "../../api";
+import {
+  getAllAlbums,
+  getAllArtist,
+  getAllSongs,
+  getAllUsers,
+} from "../../api";
 import { actionType } from "../context/reducer";
 import { useStateValue } from "../context/StateProvider";
 import { bgColors } from "../utils/styles";
@@ -25,7 +30,16 @@ export const DashboardCard = ({ icon, name, count }) => {
 const DashBoardHome = () => {
   const [{ allUsers, allSongs, allArtist, allAlbums }, dispatch] =
     useStateValue();
-    console.log("allUsers",allUsers,"allSongs",allSongs,"allArtist",allArtist,"allAlbums",allAlbums)
+  console.log(
+    "allUsers",
+    allUsers,
+    "allSongs",
+    allSongs,
+    "allArtist",
+    allArtist,
+    "allAlbums",
+    allAlbums
+  );
 
   useEffect(() => {
     if (!allUsers) {
@@ -34,7 +48,7 @@ const DashBoardHome = () => {
           type: actionType.SET_ALL_USERS,
           allUsers: data.data,
         });
-        console.log("useressss",data);
+        console.log("useressss", data);
       });
     }
 
@@ -59,15 +73,36 @@ const DashBoardHome = () => {
       });
     }
   }, []);
+
   return (
-    <div className="w-full p-6 flex items-center justify-evenly flex-wrap">
-      <DashboardCard icon={<FaUsers className="text-3xl text-textColor" />} name={"Users"} count={allUsers?.length > 0 ? allUsers?.length : 0} />
+    <div className="w-full h-full p-6 flex flex-wrap gap-4 justify-center">
+      <div className="flex flex-col md:flex-row md:flex-wrap gap-4">
+        <DashboardCard
+          icon={<FaUsers className="text-3xl text-textColor" />}
+          name={"Users"}
+          count={allUsers?.length > 0 ? allUsers?.length : 0}
+        />
 
-      <DashboardCard icon={<GiLoveSong className="text-3xl text-textColor" />} name={"Songs"} count={allSongs?.length > 0 ? allSongs?.length : 0} />
+        <DashboardCard
+          icon={<GiLoveSong className="text-3xl text-textColor" />}
+          name={"Songs"}
+          count={allSongs?.length > 0 ? allSongs?.length : 0}
+        />
+      </div>
 
-      <DashboardCard icon={<RiUserStarFill className="text-3xl text-textColor" />} name={"Artist"} count={allArtist?.length > 0 ? allArtist?.length : 0} />
+      <div className="flex flex-col md:flex-row md:flex-wrap gap-4">
+        <DashboardCard
+          icon={<RiUserStarFill className="text-3xl text-textColor" />}
+          name={"Artist"}
+          count={allArtist?.length > 0 ? allArtist?.length : 0}
+        />
 
-      <DashboardCard icon={<GiMusicalNotes className="text-3xl text-textColor" />} name={"Album"} count={allAlbums?.length > 0 ? allAlbums?.length : 0} />
+        <DashboardCard
+          icon={<GiMusicalNotes className="text-3xl text-textColor" />}
+          name={"Album"}
+          count={allAlbums?.length > 0 ? allAlbums?.length : 0}
+        />
+      </div>
     </div>
   );
 };

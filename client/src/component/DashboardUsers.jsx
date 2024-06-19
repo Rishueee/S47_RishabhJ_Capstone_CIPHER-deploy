@@ -1,146 +1,105 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineClear } from "react-icons/ai";
 import { motion } from "framer-motion";
-import { changingUserRole, getAllUsers, removeUser } from "../../api";
-import { useStateValue } from "../context/StateProvider";
+import { getAllUsers } from "../../api";
 import { actionType } from "../context/reducer";
-import {MdDelete} from "react-icons/md"
-
-export const DashboardUsersCard = ({ data, index }) => {
-  const [{ user }, dispatch] = useStateValue();
-  const [isUserRoleUpdated, setIsUserRoleUpdated] = useState(false);
-  const updateUserRole = (userId, role) => {
-    setIsUserRoleUpdated(false);
-      changingUserRole(userId, role).then((res) => {
-        if (res) {
-          getAllUsers().then((data) => {
-            dispatch({
-              type: actionType.SET_ALL_USERS,
-              allUsers: data.data,
-            });
-          });
-        }
-      })
-  }
-
-  const deleteUser = (userId) => {
-    removeUser(userId).then((res) => {
-      if (res) {
-        getAllUsers().then((data) => {
-          dispatch({
-            type: actionType.SET_ALL_USERS,
-            allUsers: data.data,
-          });
-        });
-      }
-    })
-  }
-  return (
-    <>
-   <tr className="py-4 bg-lightOverlay rounded-md cursor-pointer hover:bg-card hover:shadow-md">
-   {data._id !== (user?.user?._id ?? '') && (
-   <motion.div 
-   whileTap={{ scale: 0.75 }} className="absolute left-4 w-8 h-8 rounded-md flex items-center justify-center bg-gray-200" onClick={() => deleteUser(data._id)}>
-    <MdDelete className="text-xl text-red-400 hover:text-red-500 "/>
-   </motion.div>
-   )}
-  <td>
-    <div className="relative rounded-md flex items-start justify-flex-end; py-4">
-      <img src={data.imageurl} referrerPolicy="no-referrer" alt="" className="w-10 h-10 object-cover rounded-md min-w-[30px] text-center shadow-md mx-auto" />
-    </div>
-  </td>
-  <td className="text-base text-textColor w-275 min-w-[160px] text-center">{data.name}</td>
-  <td className="text-base text-textColor w-275 min-w-[160px] text-center">{data.email}</td>
-  <td className="text-base text-textColor w-275 min-w-[160px] text-center">{data.email_verified ? "True" : "False"}</td>
-  <td className="text-base text-textColor w-275 min-w-[160px] text-center">{new Date(data.createdAt).toLocaleString()}</td>
-  <td className="text-base text-textColor w-275 min-w-[160px] text-center">{data.role}</td>
-  {data._id !== (user?.user?._id ?? '') && (
-    <div className="flex justify-center items-center"> 
-  <motion.button whileTap={{ scale: 0.75 }} className="text-[11px] font-semibold text-black-200 px-1 mt-7  text-center item-center rounded-sm bg-slate-200" onClick={() => setIsUserRoleUpdated(true)}>
-    {data.role === "admin" ? "Member" : "Admin"}
-  </motion.button>
-</div>
-
-)}
-{isUserRoleUpdated && (
- 
- <motion.div
- initial = {{opacity:0, scale:0.5}}
- animate ={{opacity:1, scale:1}}
- exit={{opacity:0, scale:0.5}} className="absolute z-10 top-6 right-4 flex items-start flex-col gap-4 bg-white shadow-xl rounded-md">
-<br />
-<div className="flex items-center gap-4">
-
-  <p className="text-textcolor text-[14px] font-semibold px-2 h-20"> Are you sure you want to mark the user as <span>{data.role === "admin" ? "member" : "admin"}</span>?</p>
-  <motion.button whileTap={{ scale: 0.75 }} className="outline-none border-none text-sm px-4 py-1 rounded-md bg-blue-200 text-black hover:shadow-md" onClick={() => updateUserRole(data._id, data.role === "admin" ? "member": "admin" )}>Yes</motion.button>
-  <motion.button whileTap={{ scale: 0.75 }} className="outline-none border-none text-sm px-4 py-1 rounded-md bg-red-200 text-black hover:shadow-md" onClick={() => setIsUserRoleUpdated(false)}>No</motion.button>
-  <br />
-</div>
-</motion.div>
-
-)}
-
-</tr>
-      </>
-  );
-};
+import { useStateValue } from "../context/StateProvider";
+import DashboardUserCard from "./DashboardUserCard";
 
 const DashboardUsers = () => {
+  const [emailFilter, setEmailFilter] = useState("");
+  const [isFocus, setIsFocus] = useState(false);
+  const [filteredUsers, setFilteredUsers] = useState(null);
   const [{ allUsers }, dispatch] = useStateValue();
 
   useEffect(() => {
-    if (!allUsers || allUsers.length === 0) {
-      getAllUsers()
-        .then((data) => {
-          dispatch({
-            type: actionType.SET_ALL_USERS,
-            allUsers: data.users,
-          });
-          console.log("user dataDU",data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
+    if (!allUsers) {
+      getAllUsers().then((data) => {
+        dispatch({
+          type: actionType.SET_ALL_USERS,
+          allUsers: data.users,
         });
+        console.log("user dataDU", data.users);
+      });
     }
   }, [allUsers, dispatch]);
 
+  useEffect(() => {
+    if (emailFilter) {
+      const filtered = allUsers.filter(
+        (data) =>
+          data.email.includes(emailFilter) ||
+          data.name.includes(emailFilter) ||
+          data.role.includes(emailFilter)
+      );
+      setFilteredUsers(filtered);
+    } else {
+      setFilteredUsers(null); // Reset filtered users when filter is cleared
+    }
+  }, [emailFilter, allUsers]);
+
   return (
     <div className="w-full p-4 flex items-center justify-center flex-col">
-      <div className="relative w-full py-12 min-h-[400px] overflow-x-scroll my-4 flex flex-col items-center justify-start p-4 border border-gray-300 rounded-md gap-3">
-        <div className="absolute top-4 left-4">
-          <p className="text-sm font-semibold">
-            Count:{" "}
-            <span className="text-xl font-bold text-textColor">
-              {allUsers ? allUsers.length : 0}
-            </span>
-          </p>
-        </div>
-        <table className="min-w-full">
-          <thead>
-            <tr>
-              <th className="text-sm text-textColor font-semibold w-275 min-w-[160px] text-center">Image</th>
-              <th className="text-sm text-textColor font-semibold w-275 min-w-[160px] text-center">Name</th>
-              <th className="text-sm text-textColor font-semibold w-275 min-w-[160px] text-center">Email</th>
-              <th className="text-sm text-textColor font-semibold w-275 min-w-[160px] text-center">Verified</th>
-              <th className="text-sm text-textColor font-semibold w-275 min-w-[160px] text-center">Created</th>
-              <th className="text-sm text-textColor font-semibold w-275 min-w-[160px] text-center">Role</th>
-            </tr>
-          </thead>
-          <tbody>
-          {allUsers && Array.isArray(allUsers) && allUsers.map((data, i) => (
-    <DashboardUsersCard data={data} key={data._id} index={i} />
-))}
+      <div className="w-full flex justify-center items-center gap-24">
+        <input
+          type="text"
+          placeholder="Search here"
+          className={`w-52 px-4 py-2 border ${
+            isFocus ? "border-gray-500 shadow-md" : "border-gray-300"
+          } rounded-md bg-transparent outline-none duration-150 transition-all ease-in-out text-base text-textColor font-semibold`}
+          value={emailFilter}
+          onChange={(e) => setEmailFilter(e.target.value)}
+          onBlur={() => setIsFocus(false)}
+          onFocus={() => setIsFocus(true)}
+        />
 
-          </tbody>
-        </table>
+        {emailFilter && (
+          <motion.i
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            whileTap={{ scale: 0.75 }}
+            onClick={() => {
+              setEmailFilter("");
+            }}
+          >
+            <AiOutlineClear className="text-3xl text-textColor cursor-pointer" />
+          </motion.i>
+        )}
+      </div>
+
+      <div className="relative w-full py-12 min-h-[400px] overflow-x-auto scrollbar-thin scrollbar-track-slate-300 scrollbar-thumb-slate-400 my-4 flex flex-col items-center justify-start p-4 border border-gray-300 rounded-md gap-3">
+        {filteredUsers && (
+          <div className="absolute top-4 left-4">
+            <p className="text-xl font-bold">
+              <span className="text-sm font-semibold text-textColor">
+                Count :{" "}
+              </span>
+              {filteredUsers.length}
+            </p>
+          </div>
+        )}
+
+        <div className="w-full min-w-[750px] grid grid-cols-6 gap-4">
+          <p className="text-sm text-textColor font-semibold text-center">Image</p>
+          <p className="text-sm text-textColor font-semibold text-center">Name</p>
+          <p className="text-sm text-textColor font-semibold text-center">Email</p>
+          <p className="text-sm text-textColor font-semibold text-center">Verified</p>
+          <p className="text-sm text-textColor font-semibold text-center">Created</p>
+          <p className="text-sm text-textColor font-semibold text-center">Role</p>
+        </div>
+
+        <div className="w-full min-w-[750px] flex flex-col gap-3">
+          {filteredUsers && Array.isArray(filteredUsers) && filteredUsers.map((data, i) => (
+            <DashboardUserCard data={data} key={data._id} index={i} />
+          ))}
+
+          {!filteredUsers && allUsers && Array.isArray(allUsers) && allUsers.map((data, i) => (
+            <DashboardUserCard data={data} key={data._id} index={i} />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default DashboardUsers;
-
-
-
-
-

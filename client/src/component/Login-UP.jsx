@@ -1,55 +1,63 @@
-import React, { useState } from "react";
-import Login from "./Login";
-import axios from "axios";
+import React, { useState } from 'react';
+// import Login from './Login';
 
 const LoginUP = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    if (email && password) {
-      axios
-        .post("http://localhost:3000/api/users/login-m", { email, password })
-        .then((res) => {
-            console.log(res);
-            localStorage.setItem("access_token",res.data.token)
-            sessionStorage.setItem("role", res.data.foundUser[0].role)
-            sessionStorage.setItem("id", res.data.foundUser[0]._id)
-        });
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
-      setLoggedIn(true);
-    } else {
-      alert("Please enter both username and password");
-    }
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+ 
   };
 
   return (
-    <div>
-      {loggedIn ? (
-        <div>
-          <h1>Welcome, {email}!</h1>
-          <button onClick={() => setLoggedIn(false)}>Logout</button>
-        </div>
-      ) : (
-        <div>
+    <div className="max-w-md mx-auto m-8 p-6 bg-white rounded shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">Manual Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            Email Address
+          </label>
           <input
             type="email"
-            placeholder="Username"
+            id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
+            className="w-full px-3 py-2 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
           />
-          <br />
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            Password
+          </label>
           <input
             type="password"
-            placeholder="Password"
+            id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
+            className="w-full px-3 py-2 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
           />
-          <br />
-          <button onClick={handleLogin}>Login</button>
         </div>
-      )}
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Sign In
+        </button>
+      </form>
+      <div className="mt-4">
+        {/* <Login />  */}
+      </div>
     </div>
   );
 };
