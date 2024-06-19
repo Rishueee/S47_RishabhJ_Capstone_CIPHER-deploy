@@ -7,6 +7,8 @@
 3. [Tech Stack](#tech-stack)
 4. [Setup and Installation](#setup-and-installation)
 5. [Usage](#usage)
+6. [Contribution Guidelines](#contribution-guidelines)
+7. [License](#license)
 8. [Contact](#contact)
 
 ## Project Overview
@@ -20,7 +22,7 @@ Cipher is a music streaming platform designed for independent artists and their 
 
 **Why choose Cipher?**
 
-- **Direct Uploads:** Skip the distributor and keep creative control without paying a single rupee.
+- **Direct Uploads:** Skip the distributor and keep creative control.
 - **Artist-Fan Connection:** Build relationships with your biggest supporters.
 - **Monetization (Future):** Earn from your music as the platform grows.
 
@@ -33,10 +35,11 @@ Cipher is a music streaming platform designed for independent artists and their 
 
 ## Tech Stack
 
-- **Frontend:** React.js
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB
-- **Authentication & Realtime Database:** Firebase
+- **Frontend:** React.js <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React" width="30">
+- **Backend:** Node.js, Express.js <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" alt="Node.js" width="30"> <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png" alt="Express.js" width="40">
+- **Database:** MongoDB  <img src="https://www.mongodb.com/assets/images/global/favicon.ico" alt="MongoDB" width="30">
+
+- **Authentication & User Database:** Firebase <img src="https://firebase.google.com/downloads/brand-guidelines/PNG/logo-logomark.png" alt="Firebase" width="30" ma >
 
 ## Setup and Installation
 
@@ -90,15 +93,24 @@ Cipher is a music streaming platform designed for independent artists and their 
 ## Usage
 
 ### For Artists:
-1. **Upload Music:** Use the upload feature to share your tracks directly with fans.
-2. **Connect with Fans:** Engage with your audience through comments and messages.
+1. **Sign Up:** Create an account on Cipher.
+2. **Upload Music:** Use the upload feature to share your tracks directly with fans.
+3. **Connect with Fans:** Engage with your audience through comments and messages.
 
 ### For Fans:
-1. **Discover Music:** Browse and listen to tracks from independent artists.
-2. **Support Artists:** Follow your favorite artists and stay updated with their latest releases.
+1. **Sign Up:** Create an account on Cipher.
+2. **Discover Music:** Browse and listen to tracks from independent artists.
+3. **Support Artists:** Follow your favorite artists and stay updated with their latest releases.
+
+## Contribution Guidelines
+
+Guidelines for contributing to the project.
+
+## License
+
+Include the license under which the project is distributed.
 
 ## Contact
 
-- **LinkedIn:** [Rishabh Jha](https://www.linkedin.com/in/rishabh-jhaa-)
+- **LinkedIn:** [Rishabh Jhaa](https://www.linkedin.com/in/rishabh-jhaa-)
 - **GitHub:** [Rishueee](https://github.com/Rishueee?tab=repositories)
-
